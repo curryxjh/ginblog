@@ -22,12 +22,12 @@ var codeMsg = map[int]string{
 	SUCCSE:                 "OK",
 	ERROR:                  "FAIL",
 	ERROR_USERNAME_USED:    "用户名已存在！",
-	ERROR_PASSWORD_WRONG:   "密码错误！",
-	ERROR_USER_NOT_EXIST:   "用户不存在！",
-	ERROR_TOKEN_EXIST:      "TOKEN不存在！",
-	ERROR_TOKEN_RUNTIME:    "TOKEN已过期！",
-	ERROR_TOKEN_WRONG:      "TOKEN不正确！",
-	ERROR_TOKEN_TYPE_WRONG: "TOKEN格式错误！",
+	ERROR_PASSWORD_WRONG:   "密码错误",
+	ERROR_USER_NOT_EXIST:   "用户不存在",
+	ERROR_TOKEN_EXIST:      "TOKEN不存在",
+	ERROR_TOKEN_RUNTIME:    "TOKEN已过期",
+	ERROR_TOKEN_WRONG:      "TOKEN不正确",
+	ERROR_TOKEN_TYPE_WRONG: "TOKEN格式错误",
 }
 
 func GetErrMsg(code int) string {
