@@ -15,22 +15,20 @@ var code int
 
 type MyClaims struct {
 	Username string `json:"username"`
-	Password string `json:"password"`
 	jwt.StandardClaims
 }
 
 // 生成token
-func SetToken(username string, password string) (string, int) {
+func SetToken(username string) (string, int) {
 	expireTime := time.Now().Add(10 * time.Hour) // 有效时间
 	SetClaims := MyClaims{
 		username,
-		password,
 		jwt.StandardClaims{
 			ExpiresAt: expireTime.Unix(),
 			Issuer:    "ginblog",
 		},
 	}
-	reqClaim := jwt.NewWithClaims(jwt.SigningMethodES256, SetClaims)
+	reqClaim := jwt.NewWithClaims(jwt.SigningMethodHS256, SetClaims)
 	token, err := reqClaim.SignedString(JwtKey)
 	if err != nil {
 		return "", errmsg.ERROR
@@ -40,10 +38,10 @@ func SetToken(username string, password string) (string, int) {
 
 // 验证token
 func CheckToken(token string) (*MyClaims, int) {
-	settoken, _ := jwt.ParseWithClaims(token, &MyClaims{}, func(token *jwt.Token) (interface{}, error) {
+	setToken, _ := jwt.ParseWithClaims(token, &MyClaims{}, func(token *jwt.Token) (interface{}, error) {
 		return JwtKey, nil
 	})
-	if key, code := settoken.Claims.(*MyClaims); code && settoken.Valid {
+	if key, _ := setToken.Claims.(*MyClaims); setToken.Valid {
 		return key, errmsg.SUCCSE
 	} else {
 		return nil, errmsg.ERROR
@@ -57,26 +55,42 @@ func JwtToken() gin.HandlerFunc {
 
 		if tokenHeader == "" {
 			code = errmsg.ERROR_TOKEN_EXIST // token不存在
-			//c.Abort()
+			c.JSON(http.StatusOK, gin.H{
+				"code":    code,
+				"message": errmsg.GetErrMsg(code),
+			})
+			c.Abort()
+			return
 		}
 		checkToken := strings.SplitN(tokenHeader, " ", 2)
 		if len(checkToken) != 2 && checkToken[0] != "Bearer" {
 			code = errmsg.ERROR_TOKEN_TYPE_WRONG // token格式错误
+			c.JSON(http.StatusOK, gin.H{
+				"code":    code,
+				"message": errmsg.GetErrMsg(code),
+			})
 			c.Abort()
+			return
 		}
-		key, Tcode := CheckToken(checkToken[1])
-		if Tcode == errmsg.ERROR {
+		key, tCode := CheckToken(checkToken[1])
+		if tCode == errmsg.ERROR {
 			code = errmsg.ERROR_TOKEN_WRONG // token不正确
+			c.JSON(http.StatusOK, gin.H{
+				"code":    code,
+				"message": errmsg.GetErrMsg(code),
+			})
 			c.Abort()
+			return
 		}
 		if time.Now().Unix() > key.ExpiresAt {
 			code = errmsg.ERROR_TOKEN_RUNTIME // token过期
+			c.JSON(http.StatusOK, gin.H{
+				"code":    code,
+				"message": errmsg.GetErrMsg(code),
+			})
 			c.Abort()
+			return
 		}
-		c.JSON(http.StatusOK, gin.H{
-			"code":    code,
-			"message": errmsg.GetErrMsg(code),
-		})
 		c.Set("username", key.Username)
 		c.Next()
 	}
