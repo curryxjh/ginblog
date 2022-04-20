@@ -24,24 +24,46 @@ func CreateArticle(data *Article) int {
 	return errmsg.SUCCSE //200
 }
 
-// todo 查询分类下的所有文章
-
-// todo 查询单个文章
-
-// todo 查询文章列表
-func GetArticle(pageSize int, pageNum int) []Article {
-	var categorys []Article
+// 查询分类下的所有文章
+func GetCategoryArticle(id int, pageSize int, pageNum int) ([]Article, int) {
+	var articles []Article
 	var offset int
 	if pageNum == -1 && pageSize == -1 {
 		offset = -1
 	} else {
 		offset = (pageNum - 1) * pageSize
 	}
-	err = db.Offset(offset).Limit(pageSize).Find(&categorys).Error
-	if err != nil && err != gorm.ErrRecordNotFound {
-		return nil
+	err := db.Preload("Category").Offset(offset).Limit(pageSize).Where("cid = ?", id).Find(&articles).Error
+	if err != nil {
+		return nil, errmsg.ERROR_CATEGORY_NOT_EXIST
 	}
-	return categorys
+	return articles, errmsg.SUCCSE
+}
+
+// 查询单个文章
+func GetArticleInfo(id int) (Article, int) {
+	var article Article
+	err := db.Preload("Category").Where("id = ?", id).First(&article).Error
+	if err != nil {
+		return article, errmsg.ERROR_ARTICLE_NOT_EXIST
+	}
+	return article, errmsg.SUCCSE
+}
+
+// 查询文章列表
+func GetArticle(pageSize int, pageNum int) ([]Article, int) {
+	var articleList []Article
+	var offset int
+	if pageNum == -1 && pageSize == -1 {
+		offset = -1
+	} else {
+		offset = (pageNum - 1) * pageSize
+	}
+	err = db.Preload("Category").Offset(offset).Limit(pageSize).Find(&articleList).Error
+	if err != nil && err != gorm.ErrRecordNotFound {
+		return nil, errmsg.ERROR
+	}
+	return articleList, errmsg.SUCCSE
 }
 
 // 编辑文章

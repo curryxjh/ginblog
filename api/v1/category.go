@@ -8,8 +8,6 @@ import (
 	"strconv"
 )
 
-//查询分类是否存在
-
 // 添加分类
 func AddCategory(c *gin.Context) {
 	var data model.Category
