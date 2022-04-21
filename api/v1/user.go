@@ -3,6 +3,7 @@ package v1
 import (
 	"ginblog/model"
 	"ginblog/utils/errmsg"
+	validator2 "ginblog/utils/validator"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
@@ -13,7 +14,18 @@ var code int
 // 添加用户
 func AddUser(c *gin.Context) {
 	var data model.User
+	var msg string
 	_ = c.ShouldBindJSON(&data)
+
+	msg, code = validator2.Validate(&data)
+	if code != errmsg.SUCCSE {
+		c.JSON(http.StatusOK, gin.H{
+			"status":  code,
+			"message": msg,
+		})
+		return
+	}
+
 	code = model.CheckUser(data.Username)
 	if code == errmsg.SUCCSE {
 		model.CreateUser(&data) //写进数据库
@@ -23,7 +35,6 @@ func AddUser(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, gin.H{
 		"status":  code,
-		"data":    data,
 		"message": errmsg.GetErrMsg(code),
 	})
 }
