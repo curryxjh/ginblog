@@ -49,8 +49,8 @@ func LoadData(file *ini.File) {
 }
 
 func LoadQiniu(file *ini.File) {
-	AccessKey = file.Section("qiqiu").Key("AccessKey").String()
-	SecretKey = file.Section("qiqiu").Key("SecretKey").String()
-	Bucket = file.Section("qiqiu").Key("Bucket").String()
-	QiniuServer = file.Section("qiqiu").Key("QiniuServer").String()
+	AccessKey = file.Section("qiniu").Key("AccessKey").String()
+	SecretKey = file.Section("qiniu").Key("SecretKey").String()
+	Bucket = file.Section("qiniu").Key("Bucket").String()
+	QiniuServer = file.Section("qiniu").Key("QiniuServer").String()
 }
