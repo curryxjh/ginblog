@@ -1,9 +1,9 @@
 package v1
 
 import (
-	"ginbolg/middleware"
-	"ginbolg/model"
-	"ginbolg/utils/errmsg"
+	"ginblog/middleware"
+	"ginblog/model"
+	"ginblog/utils/errmsg"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )

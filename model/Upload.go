@@ -2,8 +2,8 @@ package model
 
 import (
 	"context"
-	"ginbolg/utils"
-	"ginbolg/utils/errmsg"
+	"ginblog/utils"
+	"ginblog/utils/errmsg"
 	"github.com/qiniu/go-sdk/v7/auth/qbox"
 	"github.com/qiniu/go-sdk/v7/storage"
 	"mime/multipart"

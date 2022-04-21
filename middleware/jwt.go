@@ -1,8 +1,8 @@
 package middleware
 
 import (
-	"ginbolg/utils"
-	"ginbolg/utils/errmsg"
+	"ginblog/utils"
+	"ginblog/utils/errmsg"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 	"net/http"

@@ -1,8 +1,8 @@
 package v1
 
 import (
-	"ginbolg/model"
-	"ginbolg/utils/errmsg"
+	"ginblog/model"
+	"ginblog/utils/errmsg"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )

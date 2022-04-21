@@ -1,9 +1,9 @@
 package routes
 
 import (
-	v1 "ginbolg/api/v1"
-	"ginbolg/middleware"
-	"ginbolg/utils"
+	v1 "ginblog/api/v1"
+	"ginblog/middleware"
+	"ginblog/utils"
 	"github.com/gin-gonic/gin"
 )
 

@@ -1,0 +1,2 @@
+time="2022-04-21 14:25:06" level=info Agent="ApiPOST Runtime +https://www.apipost.cn" DataSize=210 HostName=LEGION Ip=127.0.0.1 Method=GET Path="/api/v1/users?pagesize&pagenum" SpendTime="50 ms" status=200
+time="2022-04-21 14:27:55" level=info Agent="ApiPOST Runtime +https://www.apipost.cn" DataSize=210 HostName=LEGION Ip=127.0.0.1 Method=GET Path="/api/v1/users?pagesize&pagenum" SpendTime="18 ms" status=200

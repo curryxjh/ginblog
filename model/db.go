@@ -3,11 +3,11 @@ package model
 //配置数据库参数以及数据库连接
 import (
 	"fmt"
-	"ginbolg/utils"
+	"ginblog/utils"
 	_ "github.com/go-sql-driver/mysql"
+	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/schema"
-	"gorm.io/mysql"
 	"time"
 )
 

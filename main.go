@@ -1,8 +1,8 @@
 package main
 
 import (
-	"ginbolg/model"
-	"ginbolg/routes"
+	"ginblog/model"
+	"ginblog/routes"
 )
 
 func main() {

@@ -2,7 +2,7 @@ package model
 
 import (
 	"encoding/base64"
-	"ginbolg/utils/errmsg"
+	"ginblog/utils/errmsg"
 	"golang.org/x/crypto/scrypt"
 	"gorm.io/gorm"
 	"log"
