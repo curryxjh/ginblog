@@ -30,22 +30,21 @@ func CreateCategory(data *Category) int {
 }
 
 // 查询分类列表
-func GetCategory(pageSize int, pageNum int) []Category {
+func GetCategory(pageSize int, pageNum int) ([]Category, int64) {
 	var categorys []Category
 	var offset int
+	var total int64
 	if pageNum == -1 && pageSize == -1 {
 		offset = -1
 	} else {
 		offset = (pageNum - 1) * pageSize
 	}
-	err = db.Offset(offset).Limit(pageSize).Find(&categorys).Error
+	err = db.Offset(offset).Limit(pageSize).Find(&categorys).Count(&total).Error
 	if err != nil && err != gorm.ErrRecordNotFound {
-		return nil
+		return nil, 0
 	}
-	return categorys
+	return categorys, total
 }
-
-// 查询分类下的所有文章
 
 // 编辑分类
 func EditCategory(id int, data *Category) int {

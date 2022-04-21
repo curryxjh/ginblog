@@ -7,3 +7,8 @@ time="2022-04-21 15:02:53" level=info Agent="ApiPOST Runtime +https://www.apipos
 time="2022-04-21 15:03:14" level=info Agent="ApiPOST Runtime +https://www.apipost.cn" DataSize=61 HostName=LEGION Ip=127.0.0.1 Method=POST Path=/api/v1/user/add SpendTime="0 ms" status=200
 time="2022-04-21 15:03:28" level=info Agent="ApiPOST Runtime +https://www.apipost.cn" DataSize=67 HostName=LEGION Ip=127.0.0.1 Method=POST Path=/api/v1/user/add SpendTime="0 ms" status=200
 time="2022-04-21 15:03:36" level=info Agent="ApiPOST Runtime +https://www.apipost.cn" DataSize=64 HostName=LEGION Ip=127.0.0.1 Method=POST Path=/api/v1/user/add SpendTime="0 ms" status=200
+time="2022-04-21 15:29:14" level=info Agent="ApiPOST Runtime +https://www.apipost.cn" DataSize=220 HostName=LEGION Ip=127.0.0.1 Method=GET Path="/api/v1/users?pagesize&pagenum" SpendTime="19 ms" status=200
+time="2022-04-21 15:29:42" level=info Agent="ApiPOST Runtime +https://www.apipost.cn" DataSize=29 HostName=LEGION Ip=127.0.0.1 Method=POST Path=/api/v1/user/add SpendTime="46 ms" status=200
+time="2022-04-21 15:29:50" level=info Agent="ApiPOST Runtime +https://www.apipost.cn" DataSize=29 HostName=LEGION Ip=127.0.0.1 Method=POST Path=/api/v1/user/add SpendTime="43 ms" status=200
+time="2022-04-21 15:29:59" level=info Agent="ApiPOST Runtime +https://www.apipost.cn" DataSize=566 HostName=LEGION Ip=127.0.0.1 Method=GET Path="/api/v1/users?pagesize&pagenum" SpendTime="2 ms" status=200
+time="2022-04-21 15:30:07" level=info Agent="ApiPOST Runtime +https://www.apipost.cn" DataSize=1507 HostName=LEGION Ip=127.0.0.1 Method=GET Path=/api/v1/article SpendTime="0 ms" status=200

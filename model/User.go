@@ -36,19 +36,20 @@ func CreateUser(data *User) int {
 }
 
 // 查询用户列表
-func GetUsers(pageSize int, pageNum int) []User {
+func GetUsers(pageSize int, pageNum int) ([]User, int64) {
 	var users []User
 	var offset int
+	var total int64
 	if pageNum == -1 && pageSize == -1 {
 		offset = -1
 	} else {
 		offset = (pageNum - 1) * pageSize
 	}
-	err = db.Offset(offset).Limit(pageSize).Find(&users).Error
+	err = db.Offset(offset).Limit(pageSize).Find(&users).Count(&total).Error
 	if err != nil && err != gorm.ErrRecordNotFound {
-		return nil
+		return nil, 0
 	}
-	return users
+	return users, total
 }
 
 // 编辑用户

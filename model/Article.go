@@ -25,19 +25,20 @@ func CreateArticle(data *Article) int {
 }
 
 // 查询分类下的所有文章
-func GetCategoryArticle(id int, pageSize int, pageNum int) ([]Article, int) {
+func GetCategoryArticle(id int, pageSize int, pageNum int) ([]Article, int, int64) {
 	var articles []Article
+	var total int64
 	var offset int
 	if pageNum == -1 && pageSize == -1 {
 		offset = -1
 	} else {
 		offset = (pageNum - 1) * pageSize
 	}
-	err := db.Preload("Category").Offset(offset).Limit(pageSize).Where("cid = ?", id).Find(&articles).Error
+	err := db.Preload("Category").Offset(offset).Limit(pageSize).Where("cid = ?", id).Find(&articles).Count(&total).Error
 	if err != nil {
-		return nil, errmsg.ERROR_CATEGORY_NOT_EXIST
+		return nil, errmsg.ERROR_CATEGORY_NOT_EXIST, 0
 	}
-	return articles, errmsg.SUCCSE
+	return articles, errmsg.SUCCSE, total
 }
 
 // 查询单个文章
@@ -51,19 +52,21 @@ func GetArticleInfo(id int) (Article, int) {
 }
 
 // 查询文章列表
-func GetArticle(pageSize int, pageNum int) ([]Article, int) {
+func GetArticle(pageSize int, pageNum int) ([]Article, int, int64) {
 	var articleList []Article
+	var total int64
 	var offset int
+	var err error
 	if pageNum == -1 && pageSize == -1 {
 		offset = -1
 	} else {
 		offset = (pageNum - 1) * pageSize
 	}
-	err = db.Preload("Category").Offset(offset).Limit(pageSize).Find(&articleList).Error
+	err = db.Preload("Category").Offset(offset).Limit(pageSize).Find(&articleList).Count(&total).Error
 	if err != nil && err != gorm.ErrRecordNotFound {
-		return nil, errmsg.ERROR
+		return nil, errmsg.ERROR, 0
 	}
-	return articleList, errmsg.SUCCSE
+	return articleList, errmsg.SUCCSE, total
 }
 
 // 编辑文章
