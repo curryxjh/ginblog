@@ -10,11 +10,11 @@ func Cors() gin.HandlerFunc {
 
 	return func(c *gin.Context) {
 		cors.New(cors.Config{
-			AllowOrigins:  []string{"*"},
-			AllowMethods:  []string{"*"},
-			AllowHeaders:  []string{"Origin"},
-			ExposeHeaders: []string{"Content-Length", "Authorization"},
-			//AllowCredentials: true,
+			AllowOrigins:     []string{"*"},
+			AllowMethods:     []string{"*GET", "POST", "PUT", "DELETE", "OPTIONS"},
+			AllowHeaders:     []string{"*", "Authorization"},
+			ExposeHeaders:    []string{"Content-Length", "text/plain", "Authorization", "Content-Type"},
+			AllowCredentials: true,
 			//AllowOriginFunc: func(origin string) bool {
 			//	return origin == "https://github.com"
 			//},

@@ -7,6 +7,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 	"gorm.io/gorm/schema"
 	"time"
 )
@@ -24,7 +25,10 @@ func InitDb() {
 	)
 
 	db, err = gorm.Open(mysql.Open(dsn), &gorm.Config{
-
+		// gorm日志模式：silent
+		Logger: logger.Default.LogMode(logger.Silent),
+		// 外键约束
+		DisableForeignKeyConstraintWhenMigrating: true,
 		//禁用默认事务(提高运行速度)
 		SkipDefaultTransaction: true,
 
@@ -38,7 +42,7 @@ func InitDb() {
 		fmt.Println("连接数据库失败，请检查参数：", err)
 	}
 
-	_ = db.AutoMigrate(&User{}, &Article{}, &Category{})
+	_ = db.AutoMigrate(&User{}, &Article{}, &Category{}, Profile{}, Comment{})
 
 	// 获取通用数据库对象 sql.DB ，然后使用其提供的功能
 	sqlDB, _ := db.DB()

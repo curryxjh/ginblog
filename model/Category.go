@@ -29,6 +29,13 @@ func CreateCategory(data *Category) int {
 	return errmsg.SUCCSE //200
 }
 
+//查询单个分类
+func GetCategoryInfo(id int) (Category, int) {
+	var category Category
+	db.Where("id = ?", id).First(&category)
+	return category, errmsg.SUCCSE
+}
+
 // 查询分类列表
 func GetCategory(pageSize int, pageNum int) ([]Category, int64) {
 	var categorys []Category
@@ -39,7 +46,8 @@ func GetCategory(pageSize int, pageNum int) ([]Category, int64) {
 	} else {
 		offset = (pageNum - 1) * pageSize
 	}
-	err = db.Offset(offset).Limit(pageSize).Find(&categorys).Count(&total).Error
+	err := db.Offset(offset).Limit(pageSize).Find(&categorys).Error
+	db.Model(&categorys).Count(&total)
 	if err != nil && err != gorm.ErrRecordNotFound {
 		return nil, 0
 	}

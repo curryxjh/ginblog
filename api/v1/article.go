@@ -13,7 +13,7 @@ func AddArticle(c *gin.Context) {
 	var data model.Article
 	_ = c.ShouldBindJSON(&data)
 
-	code = model.CreateArticle(&data)
+	code := model.CreateArticle(&data)
 
 	c.JSON(http.StatusOK, gin.H{
 		"status":  code,
@@ -57,16 +57,26 @@ func GetArticleInfo(c *gin.Context) {
 func GetArticle(c *gin.Context) {
 	pageSize, _ := strconv.Atoi(c.Query("pagesize"))
 	pageNum, _ := strconv.Atoi(c.Query("pagenum"))
-
+	title := c.Query("title")
 	if pageSize == 0 {
 		pageSize = -1
 	}
 	if pageNum == 0 {
 		pageNum = -1
 	}
-	// -1会不使用分页功能
-	data, code, total := model.GetArticle(pageSize, pageNum)
+	if len(title) == 0 {
+		// -1会不使用分页功能
+		data, code, total := model.GetArticle(pageSize, pageNum)
 
+		c.JSON(http.StatusOK, gin.H{
+			"status":  code,
+			"data":    data,
+			"total":   total,
+			"message": errmsg.GetErrMsg(code),
+		})
+		return
+	}
+	data, code, total := model.SearchArticle(title, pageSize, pageNum)
 	c.JSON(http.StatusOK, gin.H{
 		"status":  code,
 		"data":    data,
@@ -81,7 +91,7 @@ func EditArticle(c *gin.Context) {
 	c.ShouldBindJSON(&data)
 	id, _ := strconv.Atoi(c.Param("id"))
 
-	code = model.EditArticle(id, &data)
+	code := model.EditArticle(id, &data)
 
 	c.JSON(http.StatusOK, gin.H{
 		"status":  code,
@@ -93,7 +103,7 @@ func EditArticle(c *gin.Context) {
 func DeleteArticle(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Param("id"))
 
-	code = model.DeleteArticle(id)
+	code := model.DeleteArticle(id)
 
 	c.JSON(http.StatusOK, gin.H{
 		"status":  code,

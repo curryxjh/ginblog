@@ -12,7 +12,7 @@ import (
 func AddCategory(c *gin.Context) {
 	var data model.Category
 	_ = c.ShouldBindJSON(&data)
-	code = model.CheckCategory(data.Name)
+	code := model.CheckCategory(data.Name)
 	if code == errmsg.SUCCSE {
 		model.CreateCategory(&data) //写进数据库
 	}
@@ -27,6 +27,17 @@ func AddCategory(c *gin.Context) {
 }
 
 // 查询单个分类下的文章
+func GetCategoryInfo(c *gin.Context) {
+	id, _ := strconv.Atoi(c.Param("id"))
+
+	data, code := model.GetCategoryInfo(id)
+
+	c.JSON(http.StatusOK, gin.H{
+		"status":  code,
+		"data":    data,
+		"message": errmsg.GetErrMsg(code),
+	})
+}
 
 // 查询分类列表
 func GetCategory(c *gin.Context) {
@@ -41,7 +52,7 @@ func GetCategory(c *gin.Context) {
 	}
 	// -1会不使用分页功能
 	data, total := model.GetCategory(pageSize, pageNum)
-	code = errmsg.SUCCSE
+	code := errmsg.SUCCSE
 	c.JSON(http.StatusOK, gin.H{
 		"status":  code,
 		"data":    data,
@@ -55,7 +66,7 @@ func EditCategory(c *gin.Context) {
 	var data model.Category
 	c.ShouldBindJSON(&data)
 	id, _ := strconv.Atoi(c.Param("id"))
-	code = model.CheckCategory(data.Name)
+	code := model.CheckCategory(data.Name)
 	if code == errmsg.SUCCSE {
 		model.EditCategory(id, &data)
 	}
@@ -71,7 +82,7 @@ func EditCategory(c *gin.Context) {
 // 删除分类
 func DeleteCategory(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Param("id"))
-	code = model.DeleteCategory(id)
+	code := model.DeleteCategory(id)
 	c.JSON(http.StatusOK, gin.H{
 		"status":  code,
 		"message": errmsg.GetErrMsg(code),

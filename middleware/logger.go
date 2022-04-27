@@ -11,7 +11,7 @@ import (
 	"time"
 )
 
-func Logger() gin.HandlerFunc {
+func Log() gin.HandlerFunc {
 	filePath := "log/log"
 	linkName := "latest_log.log"
 	src, err := os.OpenFile(filePath, os.O_RDWR|os.O_CREATE, 0755)
