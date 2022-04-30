@@ -34,6 +34,11 @@ CREATE TABLE `user`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = Dynamic;
 
 -- ----------------------------
+-- Records of user
+-- ----------------------------
+INSERT INTO `user` VALUES (1, '2021-02-09 17:05:14.764', '2021-02-09 17:05:14.764', NULL, 'admin', '2a10$YGL5a9z7ykG6BWOo.XhJU.h8r98BD5IvAmLISBB9rFIefbDzrv58O', 1);
+
+-- ----------------------------
 -- Table structure for profile
 -- ----------------------------
 DROP TABLE IF EXISTS `profile`;
